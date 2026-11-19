@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTodoRequest;
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Exports\TodosExport;
 
 class TodoController extends Controller
 {
@@ -25,5 +28,10 @@ class TodoController extends Controller
             'data'      => $todo,
         ], 201);
         // 201 -> HTTP_CREATED
+    }
+
+    public function export(): BinaryFileResponse
+    {
+        return Excel::download(new TodosExport, 'todos_report.xlsx');
     }
 }
