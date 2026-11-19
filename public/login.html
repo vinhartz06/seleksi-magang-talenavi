@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Talenavi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+  <div class="login-wrapper">
+
+    <div class="left-side">
+      <img src="/images/talenavi-desktop.png" alt="Talenavi Banner">
+    </div>
+
+    <div class="right-side">
+      <div class="logo-container">
+        <img src="/images/logo.png" alt="Logo Talenavi">
+      </div>
+
+      <h1 class="login-title">Selamat Datang Kembali!</h1>
+
+      <!-- alert -->
+      <div id="general-alert" class="general-alert"></div>
+
+      <form id="login-form" class="login-form" novalidate>
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            class="form-input" 
+            placeholder="Enter your email" 
+            autocomplete="email"
+            required
+          >
+          <div id="email-error" class="error-feedback"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            class="form-input" 
+            placeholder="Enter your password" 
+            autocomplete="current-password"
+            required
+          >
+          <div id="password-error" class="error-feedback"></div>
+        </div>
+
+        <div class="forgot-wrapper">
+          <a href="#" class="forgot-link">Lupa password?</a>
+        </div>
+
+        <button type="submit" id="btn-submit" class="btn-submit">
+          <span>Sign In</span>
+        </button>
+      </form>
+
+      <div class="register-wrapper">
+        <p class="register-text">
+          <span class="register-prompt">Belum punya akun?</span>
+          <a href="#" class="register-link">Daftar di sini</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
