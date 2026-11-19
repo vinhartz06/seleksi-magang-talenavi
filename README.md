@@ -1,58 +1,117 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Seleksi Full-Stack Developer Intern di Talenavi
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+dibuat oleh: Jonathan Vincent Hartono
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## BACKEND
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### A. Setup Database & Konfigurasi MySQL
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Konfigurasi `.env`**
+   Rename file `.env.example` menjadi `.env`, lalu sesuaikan konfigurasi database berikut:
 
-## Learning Laravel
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=seleksi_talenavi
+   DB_USERNAME=
+   DB_PASSWORD=
+   ```
+   *(Sesuaikan `DB_USERNAME` dan `DB_PASSWORD` dengan MySQL lokal Anda).*
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Install Dependensi & Generate App Key**
+   ```bash
+   composer install
+   php artisan key:generate
+   ```
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Jalankan Migration**
+   ```bash
+   php artisan migrate
+   ```
+   *(Jika muncul pertanyaan apakah ingin membuat database baru, pilih yes).*
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+4. **Jalankan Local Server**
+   ```bash
+   php artisan serve
+   ```
+   *(API siap diakses pada `http://localhost:8000`).*
 
-## Agentic Development
+### B. File yang Dibuat dan Dimodifikasi
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Berikut adalah file-file yang dibuat dan dimodifikasi untuk mengimplementasikan fitur backend seleksi ini:
 
-```bash
-composer require laravel/boost --dev
+1. **`database/migrations/2026_11_19_080044_create_todos_table.php`**
 
-php artisan boost:install
-```
+   Mendefinisikan struktur tabel `todos` dengan kolom:
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+   - `title` (string, wajib diisi)
+   - `assignee` (string, opsional/nullable)
+   - `due_date` (date, wajib diisi)
+   - `time_tracked` (decimal 8,2, default: 0)
+   - `status` (enum: `pending`, `open`, `in_progress`, `completed`, default: `pending`)
+   - `priority` (enum: `low`, `medium`, `high`, wajib diisi)
+   - `timestamps` (`created_at` & `updated_at`)
+2. **`app/Models/Todo.php`**
 
-## Contributing
+   - Mengatur properti `$fillable` untuk keamanan pengisian massal.
+   - Menambahkan `$casts` agar kolom `due_date` dikonversi ke format `Y-m-d` dan `time_tracked` menjadi `float`.
+3. **`routes/api.php`**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   Mendefinisikan endpoint REST API:
 
-## Code of Conduct
+   - `POST /api/todos`: Mengarah ke method `store` di `TodoController`.
+   - `GET /api/todos/export`: Mengarah ke method `export` di `TodoController`.
+4. **`app/Http/Requests/StoreTodoRequest.php`**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   Menangani validasi input saat membuat Todo baru:
 
-## Security Vulnerabilities
+   - `title`: Wajib diisi, string, maksimal 255 karakter.
+   - `assignee`: Opsional, string, maksimal 255 karakter.
+   - `due_date`: Wajib diisi, format `Y-m-d`, tidak boleh di masa lalu (`after_or_equal:today`).
+   - `time_tracked`: Opsional, tipe numerik, minimal 0.
+   - `status`: Opsional, bernilai salah satu dari `pending`, `open`, `in_progress`, atau `completed`.
+   - `priority`: Wajib diisi, bernilai salah satu dari `low`, `medium`, atau `high`.
+5. **`app/Http/Controllers/Api/TodoController.php`**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   Controller utama yang menangani request API:
 
-## License
+   - **`store()`**: Menerima data yang sudah divalidasi oleh `StoreTodoRequest`. Memastikan nilai default untuk `status` (`pending`) dan `time_tracked` (`0`) tetap terisi jika request kosong, menyimpan data ke database lewat model `Todo`, dan mengembalikan response JSON dengan HTTP status `201 Created`.
+   - **`export()`**: Memanggil class `TodosExport` melalui library `maatwebsite/excel` untuk mengunduh file Excel bernama `todos_report.xlsx`.
+6. **`app/Exports/TodosExport.php`**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   Logika export Excel menggunakan `Maatwebsite\Excel`:
+
+   - **Query & Dynamic Filter**: Menangani filter data berdasarkan query parameters:
+     - `title`: Pencarian parsial (`LIKE %...%`).
+     - `assignee`: Multi-value dipisah koma (`whereIn`).
+     - `start` & `end`: Filter rentang tanggal tenggat (`due_date`).
+     - `min` & `max`: Filter rentang durasi waktu (`time_tracked`).
+     - `status`: Multi-value dipisah koma (`whereIn`).
+     - `priority`: Multi-value dipisah koma (`whereIn`).
+   - **Headings & Mapping**: Mengatur urutan header kolom (`title`, `assignee`, `due_date`, `time_tracked`, `status`, `priority`) dan format data baris.
+   - **Summary Row**: Melalui event `AfterSheet`, menambahkan baris ringkasan paling bawah yang menampilkan **Total Todos** (`count()`) dan **Total Time Tracked** (`sum()`), disertai styling font tebal (*bold*) dan lebar kolom otomatis (*auto-size*).
+
+### C. Kesesuaian Hasil Pengerjaan dengan Instruksi
+
+Seluruh kebutuhan backend telah dipenuhi sesuai instruksi:
+
+1. **API Create Todo List (`POST /api/todos`)**:
+
+   - Kolom lengkap sesuai tipe data (`title`, `assignee`, `due_date`, `time_tracked`, `status`, `priority`).
+   - Validasi `due_date` tidak boleh tanggal lampau (`after_or_equal:today`).
+   - `status` otomatis bernilai default `pending` dan `time_tracked` default `0`.
+   - Mengembalikan response JSON objek Todo baru dengan HTTP Status Code `201 Created`.
+2. **API Export Excel Report (`GET /api/todos/export`)**:
+
+   - Menghasilkan file Excel dengan urutan kolom: `title`, `assignee`, `due_date`, `time_tracked`, `status`, `priority`.
+   - Terdapat baris ringkasan di bagian bawah: total jumlah todo dan total waktu pengerjaan.
+   - Mendukung semua kriteria filter:
+     - `title`: pencarian sebagian kata (`?title=xxx`)
+     - `assignee`: filter beberapa nama, dipisah koma (`?assignee=xxx,yyy`)
+     - `due_date`: rentang tanggal (`?start=YYYY-MM-DD&end=YYYY-MM-DD`)
+     - `time_tracked`: rentang durasi waktu (`?min=X&max=Y`)
+     - `status`: filter beberapa status, dipisah koma (`?status=pending,in_progress`)
+     - `priority`: filter beberapa prioritas, dipisah koma (`?priority=low,high`)
