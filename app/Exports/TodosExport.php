@@ -6,11 +6,12 @@ use App\Models\Todo;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Database\Eloquent\Builder;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize; // file excel langsung terbuka dengan lebar kolom yang pas dengan isinya
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class TodosExport implements FromQuery, WithHeadings, WithMapping, WithEvents
+class TodosExport implements FromQuery, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
 {
     // menyiapkan query database
     public function query(): Builder
@@ -104,8 +105,7 @@ class TodosExport implements FromQuery, WithHeadings, WithMapping, WithEvents
 
                 // menuliskan nilai total tugas dan total waktu
                 $sheet->setCellValue("A{$summaryRow}", 'Total Todos: ' . $totalTodos);
-                $sheet->setCellValue("C{$summaryRow}", 'Total Time Tracked:');
-                $sheet->setCellValue("D{$summaryRow}", $totalTime);
+                $sheet->setCellValue("D{$summaryRow}", 'Total Time Tracked: ' . $totalTime);
             },
         ];
     }
