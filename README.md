@@ -139,25 +139,24 @@ Berikut adalah file-file yang dibuat dan dimodifikasi untuk mengimplementasikan 
 1. **`routes/web.php`**
 
    Mendefinisikan routing web untuk halaman login:
-
    - `GET /`: Menyajikan file `public/login.html`.
+
 2. **`public/login.html`**
 
-   Struktur HTML semantik untuk halaman login:
-
+   Struktur HTML untuk halaman login:
    - Menghubungkan Google Fonts (font Poppins).
    - Menghubungkan file styling `public/css/login.css` dan skrip `public/js/login.js`.
    - Membagi tata letak menjadi dua sisi:
      - **Sisi Kiri (`.left-side`)**: Menampilkan foto banner Talenavi (`talenavi-desktop.png`).
      - **Sisi Kanan (`.right-side`)**: Menampilkan logo Talenavi (`logo.png`), judul *"Selamat Datang Kembali!"*, field input Email, field input Password, link Lupa Password, tombol submit *"Sign In"*, serta link pendaftaran akun.
    - Menyediakan wadah pesan error feedback di bawah masing-masing input.
+  
 3. **`public/css/login.css`**
 
-   Styling antarmuka murni menggunakan **Pure CSS** (tanpa UI library):
-
+   Styling menggunakan **Pure CSS**:
    - **Variabel Desain**: Menggunakan CSS Variables di `:root` untuk font Poppins dan warna brand Talenavi (`#CD3301`, `#FFFFFF`, `#0B0B0B`, `#CED8DF`, dll.).
    - **Tampilan Desktop ($\ge 1024\text{px}$)**:
-     - *Normal View*: Membagi layar penuh $100\text{vh}$ tanpa scroll vertikal dan tanpa margin/padding luar, dengan rasio kolom 1.39 : 1 (790px banner : 569px form).
+     - *Normal View*: Membagi layar penuh $100\text{vh}$ tanpa scroll vertikal dan tanpa margin/padding luar, dengan rasio kolom 1.39 : 1.
      - *Zoom In*: Sisi kanan form dapat di-scroll dengan lancar dari logo hingga tombol bawah tanpa terpotong.
      - *Zoom Out*: Otomatis bertransisi menjadi kartu melayang (*floating card*) dengan `border-radius: 20px` dan bayangan lembut saat ruang layar melebihi dimensi kanvas asli Figma ($1359\text{px} \times 853\text{px}$).
    - **Tampilan Mobile ($\le 768\text{px}$)**:
@@ -165,12 +164,12 @@ Berikut adalah file-file yang dibuat dan dimodifikasi untuk mengimplementasikan 
      - Menyembunyikan banner kiri
      - Banner mobile (`talenavi-mobile.png`) dipasang sebagai latar belakang layar dengan transparansi 35% di atas warna hitam `#000000` via pseudo-element `body::before`.
      - Card form dibuat transparan dengan teks berwarna putih.
+
 4. **`public/js/login.js`**
 
    Logika validasi form:
-
    - Mencegah reload halaman saat submit (`e.preventDefault()`).
-   - Validasi format email menggunakan Regular Expression (Regex).
+   - Validasi format email menggunakan Regex.
    - Validasi panjang password minimal 6 karakter.
    - Pembersihan status error secara otomatis saat pengguna mulai mengetik ulang input.
    - Menampilkan pesan error sederhana dan border merah (`.input-error`) jika input tidak valid.
