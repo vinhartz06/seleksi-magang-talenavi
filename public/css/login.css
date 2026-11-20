@@ -1,4 +1,5 @@
 :root {
+  --font-primary: 'Poppins', sans-serif;
   --color-background: #FFFFFF;
   --color-primary: #CD3301;
   --color-primary-hover: #b71515;
@@ -16,7 +17,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-primary);
   background-color: var(--color-background);
   color: var(--color-text-dark);
   min-height: 100vh;
@@ -73,7 +74,6 @@ body {
 .login-title {
   width: 569px;
   height: 36px;
-  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   font-size: 24px;
   line-height: 100%;
@@ -103,7 +103,7 @@ body {
 .form-label {
   width: 367px;
   height: 15px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-primary);
   font-weight: 500;
   font-size: 12px;
   line-height: 160%;
@@ -116,7 +116,7 @@ body {
   width: 367px;
   height: 50px;
   padding: 16px 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-primary);
   font-size: 14px;
   color: var(--color-text-dark);
   border: 1px solid var(--color-border);
@@ -142,7 +142,7 @@ body {
 }
 
 .forgot-link {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-primary);
   font-weight: 500;
   font-size: 14px;
   line-height: 140%;
@@ -177,7 +177,7 @@ body {
 .btn-submit span {
   width: 48px;
   height: 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-primary);
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
@@ -192,7 +192,7 @@ body {
 }
 
 .register-text {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-primary);
   font-weight: 500;
   font-size: 14px;
   line-height: 140%;
