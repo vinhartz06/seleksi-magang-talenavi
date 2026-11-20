@@ -239,3 +239,137 @@ body {
   color: #166534;
   border: 1px solid #bbf7d0;
 }
+
+@media (max-width: 1023px) and (min-width: 769px) {
+  .login-wrapper {
+    width: 95vw;
+    height: auto;
+  }
+
+  .left-side {
+    width: 50%;
+    height: auto;
+  }
+
+  .right-side {
+    width: 50%;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    background-color: #000000;
+    position: relative;
+    padding: 24px 16px;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/talenavi-mobile.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    opacity: 0.35;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .login-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 485px;
+    height: auto;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+
+  .left-side {
+    display: none;
+  }
+
+  .right-side {
+    width: 100%;
+    max-width: 485px;
+    height: auto;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 24px 16px;
+    box-shadow: none;
+  }
+
+  .logo-container {
+    margin-bottom: 25px;
+  }
+
+  .logo-container img {
+    object-fit: contain;
+  }
+
+  .login-title {
+    width: 100%;
+    max-width: 489px;
+    color: var(--color-background);
+  }
+
+  .login-form {
+    width: 367px;
+    height: 330px; 
+  }
+
+  .form-group {
+    width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    width: 100%;
+    color: #FFFFFF;
+  }
+
+  .form-input {
+    width: 100%;
+    background-color: #FFFFFF;
+  }
+
+  .forgot-wrapper {
+    width: 100%;
+  }
+
+  .forgot-link {
+    color: #FFFFFF;
+  }
+
+  .btn-submit {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .register-wrapper {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .register-link {
+    color: var(--color-background);
+  }
+
+  .general-alert {
+    width: 100%;
+  }
+}
