@@ -122,6 +122,7 @@ body {
   border-color: var(--color-border-focus);
 }
 
+/* error */
 .form-input.input-error {
   border-color: var(--color-error);
 }
@@ -185,35 +186,11 @@ body {
   text-decoration: underline;
 }
 
-/* error & alert */
+/* error */
 .error-feedback {
   font-size: 12px;
   color: var(--color-error);
   min-height: 0;
-}
-
-.general-alert {
-  width: 100%;
-  max-width: 367px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  margin-bottom: 12px;
-  display: none;
-}
-
-.general-alert.error {
-  display: block;
-  background-color: #fee2e2;
-  color: #991b1b;
-  border: 1px solid #fecaca;
-}
-
-.general-alert.success {
-  display: block;
-  background-color: #dcfce7;
-  color: #166534;
-  border: 1px solid #bbf7d0;
 }
 
 /* responsive */
